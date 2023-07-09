@@ -22,6 +22,10 @@ Route::get('/', function () {
     return redirect(app()->getLocale());
 });
 
+Route::get('/email/verify', function () {
+    return redirect(app()->getLocale() . '/email/verify');
+})->middleware('auth');
+
 
 Route::prefix('{locale}')
     ->where(['locale' => '[a-zA-Z]{2}'])
@@ -51,11 +55,16 @@ Route::prefix('{locale}')
             Route::get('/show/{id}', [CategoryController::class, 'show'])->name('categories.show');
 
         });
-        
+
+        Route::get('/email/verify', function () {
+            return view('auth.verify');
+        })->middleware('auth')->name('verification.verify');
+
         Auth::routes();
 
-    
 });
+
+
 
 
 
